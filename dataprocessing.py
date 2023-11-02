@@ -12,12 +12,12 @@ except LookupError:
 
 
 class textDataHandler:
-    def __init__(self, Data, Labelidx, Textidx, Embeddings = None, Stemming = "stem", Language = "English"):
+    def __init__(self, Data, Labelidx, Textidx, Embeddings = None, Stemming = False, Language = "English"):
         self.Data = Data
         self.labels = Labelidx
         self.embeddings = Embeddings
         self.textidx = Textidx
-        self.stemMethod = True if Stemming == "stem" else False
+        self.stemMethod = Stemming
         self.language = Language.lower()
 
     def prepare_embeddings(self):
@@ -43,8 +43,9 @@ class textDataHandler:
             stemmer = nltk.stem.SnowballStemmer(self.language, ignore_stopwords = True)
             text_data = text_data.apply(lambda text: " ".join([stemmer.stem(word) for word in text.split()]))
         else:
-            stemmer = nltk.wordNetLemmatizer(Language = self.language)
-
+            continue
+        
+        # TODO: Handle emojis, links, any html tags and etc forms of text pollution
         
 
 
